@@ -8,6 +8,7 @@ import os
 import re
 import sys
 import warnings
+from pathlib import Path as plPath
 import urllib.parse as urlparselib
 
 from urllib.parse import urlparse, urlunparse, ParseResult, parse_qs, unquote_plus
@@ -673,7 +674,7 @@ class Env:
                 return
 
         try:
-            with open(env_file) if isinstance(env_file, str) else env_file as f:
+            with open(env_file) if isinstance(env_file, (str, plPath)) else env_file as f:
                 content = f.read()
         except OSError:
             warnings.warn(
