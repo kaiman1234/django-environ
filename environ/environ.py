@@ -106,7 +106,10 @@ class Env:
         'consolemail': 'django.core.mail.backends.console.EmailBackend',
         'filemail': 'django.core.mail.backends.filebased.EmailBackend',
         'memorymail': 'django.core.mail.backends.locmem.EmailBackend',
-        'dummymail': 'django.core.mail.backends.dummy.EmailBackend'
+        'dummymail': 'django.core.mail.backends.dummy.EmailBackend',
+        'bandit': 'bandit.backends.smtp.HijackSMTPBackend',
+        'mailer': 'mailer.backend.DbBackend',
+        'post_office': 'post_office.EmailBackend',
     }
     _EMAIL_BASE_OPTIONS = ['EMAIL_USE_TLS', 'EMAIL_USE_SSL']
 
