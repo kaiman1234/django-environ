@@ -62,6 +62,7 @@ class Env:
     BOOLEAN_TRUE_STRINGS = ('true', 'on', 'ok', 'y', 'yes', '1')
     URL_CLASS = ParseResult
     DEFAULT_DATABASE_ENV = 'DATABASE_URL'
+    DEFAULT_DATABASE_PASSWORD_ENV = 'DATABASE_PASSWORD'
     DB_SCHEMES = {
         'postgres': DJANGO_POSTGRES,
         'postgresql': DJANGO_POSTGRES,
@@ -207,6 +208,17 @@ class Env:
         """
         return self.db_url_config(self.get_value(var, default=default), engine=engine)
     db = db_url
+
+    def db_url_plus(self, var=DEFAULT_DATABASE_ENV, password_var=DEFAULT_DATABASE_PASSWORD_ENV,
+                    default=NOTSET, engine=None):
+        """Returns a config dictionary, defaulting to DATABASE_URL. Set password
+        from other env.
+
+        :rtype: dict
+        """
+        config = self.db_url(var, engine=engine)
+        config["PASSWORD"] = self.str(password_var, default=None)
+        return config
 
     def cache_url(self, var=DEFAULT_CACHE_ENV, default=NOTSET, backend=None):
         """Returns a config dictionary, defaulting to CACHE_URL.
