@@ -237,6 +237,20 @@ class Env:
         """
         return Path(self.get_value(var, default=default), **kwargs)
 
+    def email_addresses(self, name, default=NOTSET):
+        """
+        :rtype: List of name/email pairs
+        """
+        from email.utils import getaddresses
+        def cast(value):
+            if isinstance(value, list):
+                return value
+            elif value:
+                return getaddresses([value])
+            else:
+                return []
+        return self.parse_value(self.str(name, default=default), cast=cast)
+
     def get_value(self, var, cast=None, default=NOTSET, parse_default=False):
         """Return value for given environment variable.
 
