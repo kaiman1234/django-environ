@@ -700,6 +700,11 @@ class Env:
         for key, value in overrides.items():
             cls.ENVIRON.setdefault(key, value)
 
+    @classmethod
+    def read_envs(cls, *env_files, **overrides):
+        for env_file in env_files:
+            cls.read_env(env_file, **overrides)
+
 
 class Path:
 
